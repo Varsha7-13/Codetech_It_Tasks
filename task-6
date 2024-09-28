@@ -1,0 +1,116 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+// Function to display the game menu
+void displayMenu() {
+    cout << "\nAdventure Game Menu:\n";
+    cout << "1. Start Game\n";
+    cout << "2. Display Instructions\n";
+    cout << "3. Exit Game\n";
+    cout << "Choose an option: ";
+}
+
+// Function to display game instructions
+void displayInstructions() {
+    cout << "\nGame Instructions:\n";
+    cout << "1. The game is set in a mysterious forest.\n";
+    cout << "2. Your goal is to find the hidden treasure.\n";
+    cout << "3. You will encounter obstacles and enemies.\n";
+    cout << "4. Use 'N' to move north, 'S' to move south, 'E' to move east, and 'W' to move west.\n";
+    cout << "5. Use 'F' to fight enemies and 'R' to run away.\n";
+}
+
+// Function to generate random events
+int generateEvent() {
+    return rand() % 5;
+}
+
+// Function to play the game
+void playGame() {
+    int health = 100;
+    int score = 0;
+    string direction;
+
+    while (true) {
+        int event = generateEvent();
+
+        // Display current health and score
+        cout << "\nHealth: " << health << "\n";
+        cout << "Score: " << score << "\n";
+
+        // Ask player for direction
+        cout << "Enter direction (N/S/E/W): ";
+        cin >> direction;
+
+        // Handle player movement
+        if (direction == "N") {
+            cout << "You moved north.\n";
+            score += 10;
+        } else if (direction == "S") {
+            cout << "You moved south.\n";
+            score += 10;
+        } else if (direction == "E") {
+            cout << "You moved east.\n";
+            score += 10;
+        } else if (direction == "W") {
+            cout << "You moved west.\n";
+            score += 10;
+        }
+
+        // Handle random events
+        if (event == 0) {
+            cout << "You found a treasure chest! +50 score\n";
+            score += 50;
+        } else if (event == 1) {
+            cout << "You encountered a monster! -20 health\n";
+            health -= 20;
+        } else if (event == 2) {
+            cout << "You found a health potion! +20 health\n";
+            health += 20;
+        } else if (event == 3) {
+            cout << "You got lost! -10 score\n";
+            score -= 10;
+        } else if (event == 4) {
+            cout << "You found a hidden path! +20 score\n";
+            score += 20;
+        }
+
+        // Check game over conditions
+        if (health <= 0) {
+            cout << "\nGame Over! You died.\n";
+            break;
+        } else if (score >= 200) {
+            cout << "\nCongratulations! You found the treasure.\n";
+            break;
+        }
+    }
+}
+
+int main() {
+    srand(time(0)); // Initialize random seed
+
+    int choice;
+    do {
+        displayMenu();
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                playGame();
+                break;
+            case 2:
+                displayInstructions();
+                break;
+            case 3:
+                cout << "Exiting game. Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice. Please choose a valid option.\n";
+        }
+    } while (choice != 3);
+
+    return 0;
+}
