@@ -1,0 +1,80 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Structure to represent a question
+struct Question {
+    string query;
+    string options[4];
+    int correctOption;
+};
+
+// Function to display the quiz menu
+void displayMenu() {
+    cout << "\nQuiz Game Menu:\n";
+    cout << "1. Start Quiz\n";
+    cout << "2. Exit Game\n";
+    cout << "Choose an option: ";
+}
+
+// Function to display a question and get user's answer
+int askQuestion(Question q) {
+    cout << "\n" << q.query << "\n";
+    for (int i = 0; i < 4; i++) {
+        cout << i + 1 << ". " << q.options[i] << "\n";
+    }
+    int answer;
+    cout << "Enter your answer (1-4): ";
+    cin >> answer;
+    return answer;
+}
+
+// Function to play the quiz game
+void playQuiz(Question questions[], int numQuestions) {
+    int score = 0;
+    for (int i = 0; i < numQuestions; i++) {
+        int answer = askQuestion(questions[i]);
+        if (answer == questions[i].correctOption) {
+            cout << "Correct!\n";
+            score++;
+        } else {
+            cout << "Incorrect. The correct answer is " << questions[i].options[questions[i].correctOption - 1] << ".\n";
+        }
+    }
+    cout << "\nQuiz Over! Your final score is " << score << "/" << numQuestions << ".\n";
+}
+
+int main() {
+    // Define quiz questions
+    Question questions[] = {
+        {"What is the largest lake in the world?",{"Caspian sea","Baikal","Lake Superior","Ontario"},2},
+        {"What chemial element is the main component of human bones and teeth?",{"Iron","Calcium","Sodium","Magnesium"},2},
+        {"What is considered the lung of the earth?", {"Amazon rainforest","THe mississippi river","The sahara","Everest"},1},
+        {"which is the richest country in the world?",{"Qatar","Russisa","The USA","The UAE"}, 1},
+        {"What ocean is between africa and australia?",{"Pacific","Indian","Atlantic","arctic"},2},
+		{"which planet in the solar system is known as the Blue Planet?",{"Venus","Earth","Uranus","Neptune"},2},
+		{"Filaria is caused by?",{"Bacteria","Mosquito","Protozoa","Virus"},2},
+		{"Fathometer is used to measure?",{"Earthquakes","Rainfall","Ocean depth","Sound intensity"},3},
+		{"In an adult human body, the total number of red blood cells is?",{"15trillion","20trillion","25trillion","30trillion"},4},
+		{"How many players are there on each side of the Basketball game?",{"four","five","six","seven"},2}};
+
+    int numQuestions = sizeof(questions) / sizeof(questions[0]);
+
+    int choice;
+    do {
+        displayMenu();
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                playQuiz(questions, numQuestions);
+                break;
+            case 2:
+                cout << "Exiting game. Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice. Please choose a valid option.\n";
+        }
+    } while (choice != 2);
+
+    return 0;
+}
